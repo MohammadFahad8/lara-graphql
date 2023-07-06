@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $books = Category::latest()->take(5)->get();
+    return view('welcome',[
+        'books'=>$books
+    ]);
 });
-Route::group(['prefix' => 'graphql'], function () {
-    Route::any('/', '\Rebing\GraphQL\GraphQLController@query');
-});
+
